@@ -112,6 +112,7 @@ const SideBar = ({ children }) => {
               if (route.subRoutes) {
                 return (
                   <SidebarMenu
+                    
                     setIsOpen={setIsOpen}
                     route={route}
                     showAnimation={showAnimation}

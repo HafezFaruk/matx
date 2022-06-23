@@ -1,5 +1,7 @@
 import { Autocomplete, Box, Button, Grid, TextField } from "@mui/material";
+import axios from "axios";
 import React from "react";
+import { useForm } from "react-hook-form";
 const city = [
   { label: "Dhaka" },
   { label: "Comilla" },
@@ -14,13 +16,25 @@ const userLevel = [
   { label: "Level 3" },
 ];
 function ModalForm() {
+  const { register, handleSubmit, reset } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+
+    axios.post("http://localhost:5000/form", data).then((res) => {
+      if (res.data.insertedId) {
+        alert("Your From successfully");
+        reset();
+      }
+    });
+  };
   return (
     <div>
       <Grid>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={1}>
             <Grid xs={12} sm={6} item>
               <TextField
+                {...register("name")}
                 placeholder="Enter Full Name"
                 label="Full Name"
                 variant="outlined"
@@ -30,6 +44,7 @@ function ModalForm() {
             </Grid>
             <Grid xs={12} sm={6} item>
               <TextField
+                {...register("email")}
                 placeholder="Enter email"
                 label="Email"
                 type="email"
@@ -40,6 +55,7 @@ function ModalForm() {
             </Grid>
             <Grid xs={12} sm={6} item>
               <TextField
+                {...register("address")}
                 placeholder="Enter Address"
                 label="Address"
                 variant="outlined"
@@ -49,6 +65,7 @@ function ModalForm() {
             </Grid>
             <Grid xs={12} sm={6} item>
               <TextField
+                {...register("location")}
                 placeholder="Enter Location"
                 label="Location"
                 variant="outlined"
@@ -68,6 +85,7 @@ function ModalForm() {
                 )}
                 renderInput={(params) => (
                   <TextField
+                    {...register("city")}
                     {...params}
                     label="City"
                     inputProps={{
@@ -89,6 +107,7 @@ function ModalForm() {
                 )}
                 renderInput={(params) => (
                   <TextField
+                    {...register("state")}
                     {...params}
                     label="State Name"
                     inputProps={{
@@ -110,6 +129,7 @@ function ModalForm() {
                 )}
                 renderInput={(params) => (
                   <TextField
+                    {...register("role")}
                     {...params}
                     label="Role"
                     inputProps={{
@@ -131,6 +151,7 @@ function ModalForm() {
                 )}
                 renderInput={(params) => (
                   <TextField
+                    {...register("userLevel")}
                     {...params}
                     label="User Level"
                     inputProps={{
